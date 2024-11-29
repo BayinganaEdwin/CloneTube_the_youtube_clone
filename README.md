@@ -1,5 +1,37 @@
 # CloneTube - a YouTube clone
 
+
+# Deploying the website
+
+1. Build the app using this command ( npm run build) → This will generate a dist or build folder that will contain the files we can send on our server
+2. Ssh into your web-01 and web-02
+3. Git clone your project on both your web-01 and web-02
+4. Create a new directory on your web-0/web-021 that will contain your distributable or build files ( mkdir -p /var/www/appname )
+5. Copy all the files from your github repo to the new directory (sudo cp * /var/www/appname)
+6. Set the right permissions for the new directory ( sudo chown -R www-data:www-data /var/www/appname then sudo chmod -R 755 /var/www/appname
+7. Make sure you have nginx on 01 and 02
+8. Configure Nginx to serve the new folder - sudo nano /etc/nginx/sites-available/default
+
+```jsx
+server {
+    listen 80;
+    server_name your_domain_or_ip;  # Replace with your domain name or server IP address
+
+    root /var/www/appname;  # Root directory for your website
+    index index.html;  # Default file to serve
+
+    location / {
+        try_files $uri $uri/ =404;  # Serve files or return 404 if not found
+    }
+}
+```
+
+1. sudo ln -s /etc/nginx/sites-available/ /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+2. Test if your app is properly served, by curling localhostgated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+
 ## Deployed Demo
 
 - Visit [CloneTube 🔗](https://clone-tube-the-youtube-clone.vercel.app/)
@@ -46,13 +78,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 Check out the documentation on [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more details.
-
-### `npm run eject`
-
-**Note: Once you `eject`, there's no going back! Make sure you are 100% certain you want to eject.**
-
-In case you are not satisfied with the build tool and configuration settings, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Here's is how it will go down: ejecting will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
