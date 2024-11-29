@@ -34,7 +34,7 @@ sudo systemctl restart nginx
 
 ## Deployed Demo
 
-- Visit [CloneTube 🔗](https://clone-tube-the-youtube-clone.vercel.app/)
+- Visit [CloneTube 🔗](https://www.edwinbayingana.tech/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 This is a React web-app designed as a YouTube prototype/clone, having its API data source as RapidAPI and built for education purposes
